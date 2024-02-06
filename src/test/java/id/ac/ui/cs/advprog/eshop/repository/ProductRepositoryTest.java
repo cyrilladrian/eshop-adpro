@@ -75,6 +75,25 @@ class ProductRepositoryTest {
         assertFalse(IteratorProduct.hasNext());
     }
     @Test
+    void testDeleteNonExistProduct() {
+        Product product1 = new Product();
+        product1.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        product1.setProductName("Kecap cap cap");
+        product1.setProductQuantity(1000);
+        productRepository.create(product1);
+
+        Product nonExistProduct = new Product();
+        nonExistProduct.setProductId("nonExistId");
+        productRepository.delete(nonExistProduct);
+
+        Iterator<Product> iteratorProduct = productRepository.findAll();
+        assertTrue(iteratorProduct.hasNext());
+        Product existingProduct = iteratorProduct.next();
+        assertEquals(existingProduct.getProductId(), product1.getProductId());
+        assertEquals(existingProduct.getProductName(), product1.getProductName());
+        assertEquals(existingProduct.getProductQuantity(), product1.getProductQuantity());
+    }
+    @Test
     void testEdit(){
         Product productBefore = new Product();
         productBefore.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
@@ -97,6 +116,26 @@ class ProductRepositoryTest {
         assertEquals(editedProduct.getProductQuantity(), productAfter.getProductQuantity());
         assertEquals(editedProduct.getProductId(), productBefore.getProductId());
     }
+    @Test
+    void testEditNonExistProduct(){
+        Product nonExistProduct = new Product();
+        String dummyId = "dummy";
+        nonExistProduct.setProductId(dummyId);
+        nonExistProduct.setProductName("Dummy");
+        nonExistProduct.setProductQuantity(1000);
+
+        productRepository.edit(dummyId, nonExistProduct);
+
+        Iterator<Product> productIterator = productRepository.findAll();
+            if (productIterator.hasNext()){
+                Product currentProduct = productIterator.next();
+                assertNotEquals(currentProduct.getProductId(), dummyId);
+                assertNotEquals(currentProduct.getProductName(), nonExistProduct.getProductName());
+                assertNotEquals(currentProduct.getProductId(), nonExistProduct.getProductQuantity());
+
+            }
+    }
+
 
 
 }
