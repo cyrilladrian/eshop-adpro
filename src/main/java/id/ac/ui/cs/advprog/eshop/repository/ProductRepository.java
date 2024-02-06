@@ -18,6 +18,17 @@ public class ProductRepository {
         return productData.remove(productToBeDeleted);
     }
 
+    public Product edit(String index, Product productUpdated){
+        for (int i = 0; i < productData.size(); i++){
+            Product currentProduct = productData.get(i);
+            if (currentProduct.getProductId().equals(index)){
+                productData.set(i, productUpdated);
+                return productUpdated;
+            }
+        }
+        return null;
+    }
+
     public Iterator <Product> findAll() {
         return productData.iterator();
     }

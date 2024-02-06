@@ -26,6 +26,11 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
+    public Product edit(Product updatedProduct, String index){
+        return productRepository.edit(index, updatedProduct);
+    }
+
+    @Override
     public boolean delete(Product product){return product != null && productRepository.delete(product);}
 
     @Override
@@ -39,6 +44,13 @@ public class ProductServiceImpl implements ProductService{
         }
         return null;
     }
+
+    @Override
+    public Product edit(String index, Product product) {
+        return null;
+    }
+
+
     @Override
     public List<Product> findAll(){
         Iterator<Product> productIterator = productRepository.findAll();
