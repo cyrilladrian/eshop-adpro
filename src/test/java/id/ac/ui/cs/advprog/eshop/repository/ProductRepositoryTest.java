@@ -62,5 +62,41 @@ class ProductRepositoryTest {
         assertFalse(productIterator.hasNext());
     }
 
+    @Test
+    void testDelete() {
+        Product product1 = new Product();
+        product1.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        product1.setProductName("Kecap cap cap");
+        product1.setProductQuantity(1000);
+        productRepository.create(product1);
+
+        productRepository.delete(product1);
+        Iterator<Product> IteratorProduct = productRepository.findAll();
+        assertFalse(IteratorProduct.hasNext());
+    }
+    @Test
+    void testEdit(){
+        Product productBefore = new Product();
+        productBefore.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        productBefore.setProductName("Kecap cap cap");
+        productBefore.setProductQuantity(100);
+        productRepository.create(productBefore);
+
+        Product productAfter = new Product();
+        productAfter.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        productAfter.setProductName("Teh Botol tol tol");
+        productAfter.setProductQuantity(200);
+
+        Iterator <Product> productIterator = productRepository.findAll();
+        productRepository.edit(productBefore.getProductId(), productAfter);
+
+//        Check Validity
+        Product editedProduct = productIterator.next();
+        assertEquals(editedProduct.getProductId(), productAfter.getProductId());
+        assertEquals(editedProduct.getProductName(), productAfter.getProductName());
+        assertEquals(editedProduct.getProductQuantity(), productAfter.getProductQuantity());
+        assertEquals(editedProduct.getProductId(), productBefore.getProductId());
+    }
+
 
 }
