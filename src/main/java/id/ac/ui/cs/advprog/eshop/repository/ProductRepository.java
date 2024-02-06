@@ -14,6 +14,9 @@ public class ProductRepository {
         productData.add(product);
         return product;
     }
+    public boolean delete( Product productToBeDeleted){
+        return productData.remove(productToBeDeleted);
+    }
 
     public Iterator <Product> findAll() {
         return productData.iterator();
