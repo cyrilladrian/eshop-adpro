@@ -19,4 +19,6 @@ This is kind of a typo, the Sonar cloud catch this following inconsistency of da
 
 `assertNotEquals(currentProduct.getProductId(),
 nonExistProduct.getProductQuantity());`
-## Second Question 
+## Second Question
+
+Yes it has implemented the Continuous Integration and Continuous Deployment. Everytime I Merge & pull request to the main branch there are tools such as JUnit, OSSF, Scorecard, Sonarcloud to check the code. Furthermore, I use automatic deployment utilizing Koyeb using a Dockerfile
