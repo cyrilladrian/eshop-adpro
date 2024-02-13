@@ -3,6 +3,7 @@ plugins {
     jacoco
     id("org.springframework.boot") version "3.2.2"
     id("io.spring.dependency-management") version "1.1.4"
+    id("org.sonarqube") version "4.4.1.3373"
 }
 
 group = "id.ac.ui.cs.advprog"
@@ -26,6 +27,14 @@ val seleniumJavaVersion ="4.14.1"
 val seleniumJupiterVersion ="5.0.1"
 val webdrivermanagerVersion = "5.6.3"
 val junitJupiterVersion ="5.9.1"
+
+sonar {
+    properties {
+        property("sonar.projectKey", "cyrilladrian_eshop-adpro")
+        property("sonar.organization", "cyrilladrian")
+        property("sonar.host.url", "https://sonarcloud.io")
+    }
+}
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
