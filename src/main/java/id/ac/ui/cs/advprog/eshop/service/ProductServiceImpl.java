@@ -17,12 +17,9 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public Product create(Product product){
-        if (product.getProductQuantity() > 0) {
-            product.setProductId(String.valueOf(UUID.randomUUID()));
-            productRepository.create(product);
-            return product;
-        }
-        return null;
+        product.setProductId(String.valueOf(UUID.randomUUID()));
+        productRepository.create(product);
+        return product;
     }
 
     @Override
