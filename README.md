@@ -15,7 +15,8 @@ I believe that it would be redundant since both of functional testing have the s
 
 # Reflection 3 
 ## First Question
-`                assertNotEquals(currentProduct.getProductId(),
+This is kind of a typo, the Sonar cloud catch this following inconsistency of data. I tried to `assertNotEquals` a productId and productQuantity
+
+`assertNotEquals(currentProduct.getProductId(),
 nonExistProduct.getProductQuantity());`
-The 
 ## Second Question 
