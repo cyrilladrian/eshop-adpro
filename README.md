@@ -12,3 +12,8 @@ I felt relieve and also excited, I am intrigued that all the testing I had done 
 
 ## Second Question 
 I believe that it would be redundant since both of functional testing have the same setup and instance variable, it is more align with the clean code principle to have the same Java class and just added different methods. 
+
+# Reflection 3 
+## First Question
+The 
+## Second Question 
