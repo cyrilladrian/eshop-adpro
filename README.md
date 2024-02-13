@@ -13,3 +13,13 @@ I felt relieve and also excited, I am intrigued that all the testing I had done 
 
 ## Second Question 
 I believe that it would be redundant since both of functional testing have the same setup and instance variable, it is more align with the clean code principle to have the same Java class and just added different methods. 
+
+# Reflection 3 
+## First Question
+This is kind of a typo, the Sonar cloud catch this following inconsistency of data. I tried to `assertNotEquals` a productId and productQuantity
+
+`assertNotEquals(currentProduct.getProductId(),
+nonExistProduct.getProductQuantity());`
+## Second Question
+
+Yes it has implemented the Continuous Integration and Continuous Deployment. Everytime I Merge & pull request to the main branch there are tools such as JUnit, OSSF, Scorecard, Sonarcloud to check the code. Furthermore, I use automatic deployment utilizing Koyeb using a Dockerfile
