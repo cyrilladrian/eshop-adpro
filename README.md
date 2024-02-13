@@ -7,6 +7,7 @@ Here are several clean code principles that are implemented in this project:
 
 
 # Reflection 2
+[Link to Deployment](https://eshop-universityofindonesia.koyeb.app/)
 ## First Question
 I felt relieve and also excited, I am intrigued that all the testing I had done manually in the PBP can be done automatically. A 100 percent code-coverage does not mean that the source code is bug and error free. It is essential to also consider another testing techniques. Also, it is important to update the testing units. 
 
