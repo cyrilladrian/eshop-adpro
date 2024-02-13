@@ -131,7 +131,7 @@ class ProductRepositoryTest {
                 Product currentProduct = productIterator.next();
                 assertNotEquals(currentProduct.getProductId(), dummyId);
                 assertNotEquals(currentProduct.getProductName(), nonExistProduct.getProductName());
-                assertNotEquals(currentProduct.getProductId(), nonExistProduct.getProductQuantity());
+                assertNotEquals(currentProduct.getProductQuantity(), nonExistProduct.getProductQuantity());
 
             }
     }

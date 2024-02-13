@@ -15,5 +15,7 @@ I believe that it would be redundant since both of functional testing have the s
 
 # Reflection 3 
 ## First Question
+`                assertNotEquals(currentProduct.getProductId(),
+nonExistProduct.getProductQuantity());`
 The 
 ## Second Question 
