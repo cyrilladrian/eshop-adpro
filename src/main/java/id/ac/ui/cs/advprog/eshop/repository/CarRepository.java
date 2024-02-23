@@ -8,7 +8,7 @@ import java.util.UUID;
 
 
 @Repository
-public class CarRepository {
+public class CarRepository implements CarRepositoryInterface {
     static int id = 0;
 
     private List<Car> carData = new ArrayList<>();
@@ -43,7 +43,6 @@ public class CarRepository {
                 car.setCarName(updatedCar.getCarName());
                 car.setCarColor(updatedCar.getCarColor());
                 car.setCarQuantity(updatedCar.getCarQuantity());
-
                 return car;
             }
         }
