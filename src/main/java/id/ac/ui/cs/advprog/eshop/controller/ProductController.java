@@ -84,7 +84,7 @@ class CarController extends ProductController{
     public String carListPage(Model model){
         List<Car> allCars = carService.findAll();
         model.addAttribute("cars", allCars);
-        return "carList";
+        return "listCar";
     }
 
     @GetMapping("/editCar/{carId}")
