@@ -25,3 +25,28 @@ nonExistProduct.getProductQuantity());`
 ## Second Question
 
 Yes it has implemented the Continuous Integration and Continuous Deployment. Everytime I Merge & pull request to the main branch there are tools such as JUnit, OSSF, Scorecard, Sonarcloud to check the code. Furthermore, I use automatic deployment utilizing Koyeb using a Dockerfile
+
+# Reflection 4
+## SOLID principle implementation log 
+1. Single Responsibility Principle
+
+Seperate the Product and Car Controller into different file. 
+2. Open-closed Principle 
+
+Set random UUID for the Product creation in the product repository and only set the random UUID if the Product ID is null. This can mean that in the future, if other developer want to set the Product ID by other string, it can be done without edit the code.
+3. Liskov Subtitution Principle
+
+The Car Controller does not have the same characteristic as the Product Controller. If we implement the Product Controller using the car controller, it will result in different thing.
+
+4. Interface Segregation Principle
+
+Does not have any problems
+
+5. Depedency Inversions Principle
+
+Segregate the Repositories into java class and their respective Interface.
+
+## Question 2
+Advantages of SOLID principle is that they make sure the code is scalable and be developed by other developers. Also, it ensure the code to be easy to use, less prone to bugs, and easy to test. 
+## Question 3
+Disadvantages of when not applying the SOLID principles is that it can be hard for other developer to build on top of our code. Simple change in the later development can result in major fundamental change in the codebase. 
