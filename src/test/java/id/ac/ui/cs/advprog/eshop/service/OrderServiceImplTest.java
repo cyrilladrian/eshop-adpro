@@ -66,7 +66,7 @@ class OrderServiceImplTest {
         Order newOrder = new Order(order.getId(), order.getProducts(), order.getOrderTime(),
                 order.getAuthor(), OrderStatus.SUCCESS.getValue());
         doReturn(order).when(orderRepository).findById(order.getId());
-        doReturn(newOrder).when(orderRepository).findById(order.getId());
+        doReturn(newOrder).when(orderRepository).save(any(Order.class));
 
         Order result = orderService.updateStatus(order.getId(), OrderStatus.SUCCESS.getValue());
 
