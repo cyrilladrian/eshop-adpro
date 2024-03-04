@@ -39,9 +39,9 @@ public class PaymentTest {
         Map<String, String> subFeature = new HashMap<>();
         subFeature.put("voucherCode", "ESHOPABC12345678");
 
-        assertThrows(IllegalArgumentException.class, ()-> {
-            this.payment = new Payment("123456789","voucher", "mamakloe", subFeature);
-        });
+        this.payment = new Payment("123456789","voucher", subFeature);
+
+        assertThrows(IllegalArgumentException.class, () -> payment.setStatus("mamakloe"));
     }
 
     @Test
@@ -61,7 +61,7 @@ public class PaymentTest {
 
         this.payment = new Payment("123456789", "voucher", subFeature);
 
-        assertNotEquals(16, payment.getSubFeature().get("voucherId").length());
+        assertNotEquals(16, payment.getPaymentData().get("voucherId").length());
         assertEquals("REJECT", payment.getStatus());
     }
 
@@ -77,14 +77,14 @@ public class PaymentTest {
     }
 
     @Test
-    void testCreatePaymentSuccess (){
+    void testCreatePaymentVoucherSuccess (){
         Map<String, String> subFeature = new HashMap<>();
         String validId ="^ESHOP(?=\\d{8})$";
         subFeature.put("voucherId", validId);
 
         this.payment = new Payment("123456789", "voucher", subFeature);
 
-        assertEquals(16, payment.getSubFeature().get("voucherId").length());
+        assertEquals(16, payment.getPaymentData().get("voucherId").length());
         assertEquals("SUCCESS", payment.getStatus());
     }
 
@@ -96,8 +96,8 @@ public class PaymentTest {
 
         Payment payment = new Payment("123456789", "cash", subFeature);
 
-        assertNotNull(payment.getSubFeature().get("address"));
-        assertNotNull(payment.getSubFeature().get("deliveryFee"));
+        assertNotNull(payment.getPaymentData().get("address"));
+        assertNotNull(payment.getPaymentData().get("deliveryFee"));
         assertEquals("SUCCESS", payment.getStatus());
     }
 
@@ -107,8 +107,8 @@ public class PaymentTest {
 
         Payment payment = new Payment("123456789", "cash", subFeature);
 
-        assertNull(payment.getSubFeature().get("address"));
-        assertNull(payment.getSubFeature().get("deliveryFee"));
+        assertNull(payment.getPaymentData().get("address"));
+        assertNull(payment.getPaymentData().get("deliveryFee"));
         assertEquals("REJECT", payment.getStatus());
     }
 
@@ -120,7 +120,7 @@ public class PaymentTest {
 
         Payment payment = new Payment("123456789", "cash", subFeature);
 
-        assertTrue(hasEmptyValue(payment.getSubFeature()));
+        assertTrue(hasEmptyValue(payment.getPaymentData()));
         assertEquals("REJECT", payment.getStatus());
     }
     @Test
@@ -131,19 +131,19 @@ public class PaymentTest {
 
         Payment payment = new Payment("123456789", "cash", subFeature);
 
-        assertTrue(hasNullValue(payment.getSubFeature()));
+        assertTrue(hasNullValue(payment.getPaymentData()));
         assertEquals("REJECT", payment.getStatus());
     }
 
     @Test
-    void testCreatePaymentCashReject_ExistEmptySubFields() {
+    void testCreatePaymentCashReject_ExistEmptySubFields1() {
         Map<String, String> subFeature = new HashMap<>();
         subFeature.put("address", "");
         subFeature.put("deliveryFee", "10000");
 
         Payment payment = new Payment("123456789", "cash", subFeature);
 
-        assertTrue(hasEmptyValue(payment.getSubFeature()));
+        assertTrue(hasEmptyValue(payment.getPaymentData()));
         assertEquals("REJECT", payment.getStatus());
     }
 
@@ -155,19 +155,19 @@ public class PaymentTest {
 
         Payment payment = new Payment("123456789", "cash", subFeature);
 
-        assertTrue(hasNullValue(payment.getSubFeature()));
+        assertTrue(hasNullValue(payment.getPaymentData()));
         assertEquals("REJECT", payment.getStatus());
     }
 
     @Test
-    void testCreatePaymentCashReject_ExistEmptySubFields() {
+    void testCreatePaymentCashReject_ExistEmptySubFields2() {
         Map<String, String> subFeature = new HashMap<>();
         subFeature.put("address", "Cipete");
         subFeature.put("deliveryFee", "");
 
         Payment payment = new Payment("123456789", "cash", subFeature);
 
-        assertTrue(hasEmptyValue(payment.getSubFeature()));
+        assertTrue(hasEmptyValue(payment.getPaymentData()));
         assertEquals("REJECT", payment.getStatus());
     }
 
