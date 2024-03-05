@@ -22,7 +22,7 @@ public class PaymentTest {
         assertEquals("CHECKING_PAYMENT", payment.getStatus());
         assertEquals("123456789", payment.getId());
         assertEquals("VOUCHER", payment.getMethod());
-        assertEquals("ESHOPABC12345678", payment.getPaymentData().get("voucher"));
+        assertEquals("ESHOPABC12345678", payment.getPaymentData().get("voucherId"));
 
     }
     @Test
@@ -70,6 +70,7 @@ public class PaymentTest {
         assertThrows(IllegalArgumentException.class, () -> payment.setStatus("pweaseee"));
 
     }
+
 
 
 }
