@@ -38,10 +38,10 @@ public class PaymentRepositoryTest {
     //testSaveCreate; check for id length -> status accepted
     @Test
     void testSaveCreate(){
-        Payment payment = paymentList.get(1);
+        Payment payment = paymentList.get(0);
         Payment result = paymentRepository.save(payment);
 
-        Payment findResult = paymentRepository.findById(paymentList.get(1).getId());
+        Payment findResult = paymentRepository.findById(paymentList.get(0).getId());
 
         assertEquals(payment.getId(), result.getId());
         assertEquals(payment.getId(), findResult.getId());
@@ -111,11 +111,11 @@ public class PaymentRepositoryTest {
         for (Payment payment: paymentList){
             paymentRepository.save(payment);
         }
-        Payment findResult = paymentRepository.findById(paymentList.get(1).getId());
-        assertEquals(paymentList.get(1).getId(), findResult.getId());
-        assertEquals(paymentList.get(1).getMethod(), findResult.getMethod());
-        assertEquals(paymentList.get(1).getStatus(), findResult.getStatus());
-        assertEquals(paymentList.get(1).getPaymentData(), findResult.getPaymentData());
+        Payment findResult = paymentRepository.findById(paymentList.get(0).getId());
+        assertEquals(paymentList.get(0).getId(), findResult.getId());
+        assertEquals(paymentList.get(0).getMethod(), findResult.getMethod());
+        assertEquals(paymentList.get(0).getStatus(), findResult.getStatus());
+        assertEquals(paymentList.get(0).getPaymentData(), findResult.getPaymentData());
     }
     //testFindByIdNotFound
     @Test
