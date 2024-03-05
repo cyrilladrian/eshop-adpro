@@ -11,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PaymentTest {
 
 
-   //testCreatePaymentSuccess
     @Test
     void testCreatePaymentDefaultStatus() {
 
@@ -43,7 +42,6 @@ public class PaymentTest {
 
     }
 
-    // testSetStatusToAccept
     @Test
     void testSetStatusToReject(){
         Map<String, String> paymentData = new HashMap<>();
@@ -72,7 +70,6 @@ public class PaymentTest {
         assertThrows(IllegalArgumentException.class, () -> payment.setStatus("pweaseee"));
 
     }
-    //testSetStatusToInvalidStatus
 
 
 }
