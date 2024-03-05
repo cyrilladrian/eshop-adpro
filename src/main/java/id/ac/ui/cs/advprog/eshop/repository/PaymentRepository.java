@@ -5,6 +5,7 @@ import id.ac.ui.cs.advprog.eshop.model.Payment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class PaymentRepository {
     private List<Payment> paymentCollection = new ArrayList<>();
@@ -12,17 +13,13 @@ public class PaymentRepository {
     public Payment save(Payment payment){
         //check the paymentData
         if (payment.getMethod().equals("VOUCHER")){
-            if (payment.getPaymentData().get("voucherId").matches("^ESHOP(?:\\d+[A-Za-z]+|[A-Za-z]+\\d+)[A-Za-z0-9]*$")  && payment.getPaymentData().get("voucherId").length() == 16){
-                payment.setStatus(PaymentStatus.ACCEPTED.getValue());
-            } else {
-                payment.setStatus(PaymentStatus.REJECTED.getValue());
-            }
+            String status = checkVoucherId(payment.getPaymentData().get("voucherId"));
+            payment.setStatus(status);
+
         } else if (payment.getMethod().equals("CASH")) {
-            if(payment.getPaymentData().containsValue(null) || payment.getPaymentData().containsValue("")){
-                payment.setStatus(PaymentStatus.REJECTED.getValue());
-            }else{
-                payment.setStatus(PaymentStatus.ACCEPTED.getValue());
-            }
+            String status = checkCashData(payment.getPaymentData());
+            payment.setStatus(status);
+
         }
 
         paymentCollection.add(payment);
@@ -38,5 +35,21 @@ public class PaymentRepository {
     }
     public List<Payment> findAll(){
         return new ArrayList<>(paymentCollection);
+    }
+
+    private String checkVoucherId(String voucherId){
+        if (voucherId.matches("^ESHOP(?:\\d+[A-Za-z]+|[A-Za-z]+\\d+)[A-Za-z0-9]*$")  && voucherId.length() == 16){
+            return PaymentStatus.ACCEPTED.getValue();
+        } else {
+            return PaymentStatus.REJECTED.getValue();
+        }
+    }
+
+    private String checkCashData(Map<String, String> paymentData){
+        if(paymentData.containsValue(null) || paymentData.containsValue("")){
+            return PaymentStatus.REJECTED.getValue();
+        }else{
+            return PaymentStatus.ACCEPTED.getValue();
+        }
     }
 }
