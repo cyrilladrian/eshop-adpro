@@ -34,7 +34,7 @@ public class PaymentServiceImplTest {
     OrderRepository orderRepository;
     List<Payment> paymentList;
 
-    Order order;
+    List<Order> orders = new ArrayList<>();
 
     @BeforeEach
     void setUp(){
@@ -47,45 +47,56 @@ public class PaymentServiceImplTest {
         product1.setProductQuantity(2);
         products.add(product1);
 
-        order = new Order("7f9e15bb-4b15-42f4-aebc-c3af385fb078", products, 1708570000L, "Safira Sudrajat");
+        Order order1 = new Order("13652556-012a-4c07-b546-54eb1396d79b", products, 1708560000L, "Safira Sudrajat");
+        orders.add(order1);
+        Order order2 = new Order("7f9e15bb-4b15-42f4-aebc-c3af385fb078", products, 1708570000L, "Safira Sudrajat");
+        orders.add(order2);
 
         Map<String, String> paymentData1 = new HashMap<>();
         paymentData1.put("voucherId", "ESHOPABC12345678");
-        Payment payment1 = new Payment("123456789", PaymentMethod.VOUCHER.getValue(), paymentData1);
+        Payment payment1 = new Payment("13652556-012a-4c07-b546-54eb1396d79b", PaymentMethod.VOUCHER.getValue(), paymentData1);
         paymentList.add(payment1);
 
         Map<String, String> paymentData2 = new HashMap<>();
         paymentData1.put("address", "Cipete");
         paymentData2.put("deliveryFee", "10000");
-        Payment payment2 = new Payment("2234567890",PaymentMethod.CASH.getValue(), paymentData2);
+        Payment payment2 = new Payment("7f9e15bb-4b15-42f4-aebc-c3af385fb078",PaymentMethod.CASH.getValue(), paymentData2);
         paymentList.add(payment2);
     }
 
 //testSetStatusValid -> set status for payment; check for the order status
     @Test
     void testSetStatusAccepted(){
-        Payment payment = paymentList.getFirst();
+        Payment payment = paymentList.get(1);
+        Order order = orders.get(1);
 
-        doReturn(payment).when(paymentRepository).save(any(Payment.class));
-        doReturn(order).when(orderRepository).save(any(Order.class));
+        doReturn(payment).when(paymentRepository).save(payment);
+        doReturn(order).when(orderRepository).save(order);
+        doReturn(order).when(orderRepository).findById(order.getId());
 
         Payment result = paymentService.setStatus(payment, PaymentStatus.ACCEPTED.getValue());
         verify(paymentRepository,times(1)).save(any(Payment.class));
         verify(orderRepository,times(1)).save(any(Order.class));
+        verify(orderRepository,times(1)).findById(any(String.class));
+
 
         assertEquals(PaymentStatus.ACCEPTED.getValue(), result.getStatus());
         assertEquals(OrderStatus.SUCCESS.getValue(), order.getStatus());
     }
     @Test
     void testSetStatusRejected(){
-        Payment payment = paymentList.getFirst();
+        Payment payment = paymentList.get(1);
+        Order order = orders.get(1);
 
-        doReturn(payment).when(paymentRepository).save(any(Payment.class));
-        doReturn(order).when(orderRepository).save(any(Order.class));
+        doReturn(payment).when(paymentRepository).save(payment);
+        doReturn(order).when(orderRepository).save(order);
+        doReturn(order).when(orderRepository).findById(order.getId());
 
         Payment result = paymentService.setStatus(payment, PaymentStatus.REJECTED.getValue());
         verify(paymentRepository,times(1)).save(any(Payment.class));
         verify(orderRepository,times(1)).save(any(Order.class));
+
+
 
         assertEquals(PaymentStatus.REJECTED.getValue(), result.getStatus());
         assertEquals(OrderStatus.FAILED.getValue(), order.getStatus());
@@ -100,7 +111,8 @@ public class PaymentServiceImplTest {
     @Test
     void testAddPayment(){
         Payment payment = paymentList.getFirst();
-        doReturn(payment).when(paymentRepository).save(payment);
+        Order order = orders.getFirst();
+        doReturn(payment).when(paymentRepository).save(any(Payment.class));
 
         Payment result = paymentService.addPayment(order, payment.getMethod(), payment.getPaymentData());
         verify(paymentRepository, times(1)).save(any(Payment.class));
@@ -116,21 +128,21 @@ public class PaymentServiceImplTest {
         Payment payment = paymentList.getFirst();
         doReturn(payment).when(paymentRepository).findById(payment.getId());
 
-        Payment result = paymentService.findById(payment.getId());
+        Payment result = paymentService.getPayment(payment.getId());
         assertEquals(payment.getId(), result.getId());
     }
     //testFindByIdIfIdNotFound
     @Test
     void testFindByIdIfNotFound(){
         doReturn(null).when(paymentRepository).findById("pwease");
-        assertNull(paymentService.findById("pwease"));
+        assertNull(paymentService.getPayment("pwease"));
     }
     //testGetAllPaymentIfNotEmpty
     @Test
     void testGetAllPaymentIfNotEmpty(){
 
         doReturn(paymentList).when(paymentRepository).findAll();
-        List <Payment> results = orderService.getAllPayments();
+        List <Payment> results = paymentService.getAllPayments();
 
         assertEquals(paymentList.size(), results.size());
     }
@@ -139,7 +151,7 @@ public class PaymentServiceImplTest {
     @Test
     void testGetAllPaymentsIfEmpty(){
         List <Payment> results = paymentService.getAllPayments();
-        verify(paymentRepository, times(1)).getAllPayments();
+        verify(paymentRepository, times(1)).findAll();
         assertTrue(results.isEmpty());
     }
 
