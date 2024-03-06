@@ -49,4 +49,13 @@ Segregate the Repositories into java class and their respective Interface.
 ## Question 2
 Advantages of SOLID principle is that they make sure the code is scalable and be developed by other developers. Also, it ensure the code to be easy to use, less prone to bugs, and easy to test. 
 ## Question 3
-Disadvantages of when not applying the SOLID principles is that it can be hard for other developer to build on top of our code. Simple change in the later development can result in major fundamental change in the codebase. 
+Disadvantages of when not applying the SOLID principles is that it can be hard for other developer to build on top of our code. Simple change in the later development can result in major fundamental change in the codebase.
+
+# Reflection 5
+## Question 1
+Yes the tests are very useful for the development of the system, since in define clearly the scope of each feature and guarantee the working of each feature. One of the way to implement the test better, for me, is to implement the skeleton first, so that I can get a better understanding of the feature before the test is implemented.
+Moreover, it is even better for me to have a certain 'workspace' to implement the functions, parallel with developing the tests. 
+
+
+## Question 2
+I am trying to follow the FIRST principle in designing the tests. However, there are certain constraint, since there are other input that might not be covered in the test cases, which maybe can be improved in the T (timely/thorough) principle. For the next development, the thing that needs to be improved is that to create more unit tests that accommodate more various input. 
