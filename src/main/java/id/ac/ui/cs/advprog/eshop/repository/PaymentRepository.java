@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.eshop.repository;
 
+import id.ac.ui.cs.advprog.eshop.enums.PaymentMethod;
 import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
 import id.ac.ui.cs.advprog.eshop.model.Payment;
 import org.springframework.stereotype.Repository;
@@ -14,11 +15,11 @@ public class PaymentRepository {
 
     public Payment save(Payment payment){
         //check the paymentData
-        if (payment.getMethod().equals("VOUCHER")){
+        if (payment.getMethod().equals(PaymentMethod.VOUCHER.getValue())){
             String status = checkVoucherId(payment.getPaymentData().get("voucherId"));
             payment.setStatus(status);
 
-        } else if (payment.getMethod().equals("CASH")) {
+        } else if (payment.getMethod().equals(PaymentMethod.CASH.getValue())) {
             String status = checkCashData(payment.getPaymentData());
             payment.setStatus(status);
 
@@ -40,7 +41,15 @@ public class PaymentRepository {
     }
 
     private String checkVoucherId(String voucherId){
-        if (voucherId.matches("^ESHOP(?:\\d+[A-Za-z]+|[A-Za-z]+\\d+)[A-Za-z0-9]*$")  && voucherId.length() == 16){
+        int numCounter = 0;
+
+        for (int i = 0; i< voucherId.length(); i++){
+            if (Character.isDigit(voucherId.charAt(i))){
+                numCounter += 1;
+            }
+        }
+
+        if (voucherId.matches("^ESHOP")  && voucherId.length() == 16 && numCounter == 8){
             return PaymentStatus.ACCEPTED.getValue();
         } else {
             return PaymentStatus.REJECTED.getValue();
