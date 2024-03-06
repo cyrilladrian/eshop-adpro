@@ -25,7 +25,6 @@ public class PaymentServiceImpl implements PaymentService{
         Payment payment = new Payment(order.getId(), method, paymentData);
         paymentRepository.save(payment);
         return payment;
-
     }
 
     @Override
@@ -42,15 +41,20 @@ public class PaymentServiceImpl implements PaymentService{
         payment.setStatus(status);
         paymentRepository.save(payment);
         Order order = orderRepository.findById(payment.getId());
-
-        if (status.equals(PaymentStatus.ACCEPTED.getValue())){
-            order.setStatus(OrderStatus.SUCCESS.getValue());
-        } else if (status.equals(PaymentStatus.REJECTED.getValue())) {
-            order.setStatus(OrderStatus.FAILED.getValue());
-        }
-
+        String orderStatus = checkAndSetStatusOrder(payment.getStatus());
+        order.setStatus(orderStatus);
         orderRepository.save(order);
         return payment;
     }
 
+    private String checkAndSetStatusOrder(String paymentStatus){
+        if (paymentStatus.equals(PaymentStatus.ACCEPTED.getValue())){
+            return OrderStatus.SUCCESS.getValue();
+        } else if (paymentStatus.equals(PaymentStatus.REJECTED.getValue())) {
+            return OrderStatus.FAILED.getValue();
+        }
+        else{
+            throw new IllegalArgumentException();
+        }
+    }
 }
